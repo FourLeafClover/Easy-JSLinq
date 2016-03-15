@@ -21,6 +21,13 @@
         return dataItems === null ? 0 : dataItems.length;
     }
 
+    Linq.prototype.Clear = function () {
+        if (dataItems === null) {
+            throw ERRORCode_1;
+        }
+        dataItems.splice(0, dataItems.length);
+    }
+
     Linq.prototype.All = function (func) {
         if (dataItems === null) {
             throw ERRORCode_1;
@@ -31,12 +38,76 @@
         }
 
         var result = true;
-        for(var index = 0; index<dataItems.length;index++){
+        for (var index = 0; index < dataItems.length; index++) {
             if (!func(dataItems[index])) {
                 result = false;
                 break;
             }
         }
+        return result;
+    }
+
+    Linq.prototype.IndexOf = function (item) {
+        if (dataItems) {
+            throw ERRORCode_1;
+        }
+
+        if (item === null) {
+            return -1;
+        }
+        else {
+            return dataItems.indexOf(item);
+        }
+
+        return this;
+    }
+
+    Linq.prototype.LastIndexOf = function (item) {
+        if (dataItems) {
+            throw ERRORCode_1;
+        }
+
+        var result = -1;
+        if (item !== -1) {
+            for (var index = dataItems.length - 1; index >= 0; index--) {
+                if (dataItems[index] === item) {
+                    result = index;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    Linq.prototype.FindIndexOf = function (func) {
+        if (dataItems) {
+            throw ERRORCode_1;
+        }
+
+        var result = -1;
+
+        for (var index = 0; index < dataItems.length; index++) {
+            if (func(dataItems[index])) {
+                result = index;
+            }
+        }
+
+        return result;
+    }
+
+    Linq.prototype.FindLastIndexOf = function (func) {
+        if (dataItems) {
+            throw ERRORCode_1;
+        }
+
+        var result = -1;
+
+        for (var index = dataItems.length - 1; index >= 0; index--) {
+            if (func(dataItems[index])) {
+                result = index;
+            }
+        }
+
         return result;
     }
 
@@ -114,7 +185,7 @@
         }
         var result = [];
 
-        dataItems.Foreach(function(item){
+        dataItems.Foreach(function (item) {
             if (func(item)) {
                 result.push(item);
             }
@@ -130,11 +201,19 @@
 
         var result = [];
 
-        dataItems.Foreach(function(item){
+        dataItems.Foreach(function (item) {
             result.push(func(item));
         })
 
         dataItems = result;
+        return this;
+    }
+
+    Linq.prototype.Sort = function (func) {
+        if (dataItems === null) {
+            throw ERRORCode_1;
+        }
+        dataItems.sort(func);
         return this;
     }
 
@@ -144,9 +223,21 @@
             throw ERRORCode_1;
         }
 
-        dataItems.forEach(function(item){
-           func(item);
+        dataItems.forEach(function (item) {
+            func(item);
         });
+
+        return this;
+    }
+
+    Linq.prototype.Add = function (item) {
+
+        if (dataItems === null) {
+            throw ERRORCode_1;
+        }
+        if (item != null) {
+            dataItems.push(item);
+        }
 
         return this;
     }
@@ -164,14 +255,14 @@
             throw ERRORCode_3;
         }
 
-        array.forEach(function(item){
+        array.forEach(function (item) {
             dataItems.push(item);
         });
 
         return this;
     }
 
-    Linq.prototype.Remove = function (item) {
+    Linq.prototype.Pop = function (item) {
         if (dataItems === null) {
             throw ERRORCode_1;
         }
@@ -183,7 +274,7 @@
         return this;
     }
 
-    Linq.prototype.RemoveRange = function (items) {
+    Linq.prototype.PopRange = function (items) {
         if (dataItems === null) {
             throw ERRORCode_1;
         }
@@ -192,12 +283,32 @@
             throw ERRORCode_3;
         }
 
-        items.forEach(function(item){
+        items.forEach(function (item) {
             var index = dataItems.indexOf(item);
             if (index > 0) {
                 dataItems.splice(index, 1);
             }
         })
+        return this;
+    }
+
+    Linq.prototype.RemoveAll = function (func) {
+        if (dataItems === null) {
+            throw ERRORCode_1;
+        }
+
+        var removeItem = [];
+        dataItems.forEach(function (item) {
+            if (func(item)) {
+                removeItem.push(item);
+            }
+        })
+
+        removeItem.forEach(function (item) {
+            var index = dataItems.indexOf(item);
+            dataItems.splice(index, 1);
+        });
+
         return this;
     }
 

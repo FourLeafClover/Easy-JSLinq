@@ -1,0 +1,9 @@
+{
+  "name": "easy-ling",
+  "version": "0.0.1",
+  "description":"Linq for js",
+  "author":"Frank Zhang",
+  "devDependencies": {
+    "qunitjs": "^1.22.0"
+  }
+}
