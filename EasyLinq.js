@@ -76,7 +76,7 @@
     }
 
     Linq.prototype.FindIndexOf = function (func) {
-        if (dataItems) {
+        if (dataItems === null) {
             throw ERRORCode_1;
         }
 
@@ -92,7 +92,7 @@
     }
 
     Linq.prototype.FindLastIndexOf = function (func) {
-        if (dataItems) {
+        if (dataItems === null) {
             throw ERRORCode_1;
         }
 
@@ -108,6 +108,7 @@
     }
 
     Linq.prototype.FirstOrDefault = function (func) {
+
         if (dataItems === null) {
             throw ERRORCode_1;
         }
@@ -116,7 +117,17 @@
             return null;
         }
 
-        return dataItems[0];
+        if (func === undefined) {
+            return dataItems[0];
+        } else {
+            for (var index = 0; index < dataItems.length; index++) {
+                if (func(dataItems[index])) {
+                    return dataItems[index];
+                }
+            }
+        }
+
+        return null;
     }
 
     Linq.prototype.Foreach = function (func) {
@@ -133,7 +144,7 @@
     }
 
     Linq.prototype.IndexOf = function (item) {
-        if (dataItems) {
+        if (dataItems === null) {
             throw ERRORCode_1;
         }
 
@@ -155,23 +166,6 @@
         return dataItems.join(splitChar);
     }
 
-    Linq.prototype.LastIndexOf = function (item) {
-        if (dataItems) {
-            throw ERRORCode_1;
-        }
-
-        var result = -1;
-        if (item !== -1) {
-            for (var index = dataItems.length - 1; index >= 0; index--) {
-                if (dataItems[index] === item) {
-                    result = index;
-                    break;
-                }
-            }
-        }
-        return result;
-    }
-
     Linq.prototype.LastOrDeafult = function (func) {
         if (dataItems === null) {
             throw ERRORCode_1;
@@ -189,7 +183,7 @@
         }
 
         var index = dataItems.indexOf(item);
-        if (index > 0) {
+        if (index > -1) {
             dataItems.splice(index, 1);
         }
         return this;
@@ -206,7 +200,7 @@
 
         items.forEach(function (item) {
             var index = dataItems.indexOf(item);
-            if (index > 0) {
+            if (index > -1) {
                 dataItems.splice(index, 1);
             }
         })
@@ -241,16 +235,27 @@
         if (dataItems.length === 0) {
             return 0;
         }
-
         var sum = 0;
-        if (typeof(func[dataItems]) === 'number') {
-            for (var item in dataItems) {
-                sum += func(dataItems);
-            }
-        } else {
-            throw ERRORCode_2;
-        }
 
+        if (func === undefined) {
+            dataItems.forEach(function (item) {
+                if (typeof(item) === 'number') {
+                    sum += item;
+                } else {
+                    throw ERRORCode_3;
+                }
+            });
+        }
+        else {
+            dataItems.forEach(function (item) {
+                var iterator = func(item);
+                if (typeof(iterator) === 'number') {
+                    sum += iterator;
+                } else {
+                    throw ERRORCode_3;
+                }
+            });
+        }
         return sum;
     }
 
@@ -261,7 +266,7 @@
 
         var result = [];
 
-        dataItems.Foreach(function (item) {
+        dataItems.forEach(function (item) {
             result.push(func(item));
         })
 
@@ -307,7 +312,7 @@
         }
         var result = [];
 
-        dataItems.Foreach(function (item) {
+        dataItems.forEach(function (item) {
             if (func(item)) {
                 result.push(item);
             }
@@ -316,7 +321,8 @@
         return this;
     }
 
-    var jsLinq = new Linq();
+    if (window.EasyLinq === undefined || window.EasyLinq === null) {
+        window.EasyLinq = new Linq();
+    }
 
-    window.EasyLinq = jsLinq;
 })(window.EasyLinq);
