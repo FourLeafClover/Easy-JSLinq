@@ -6,13 +6,13 @@ Linq For JS
 
 主要是将.net的Linq移植到JS上.对.Neter友好.对Java可能不太友好
 
-1.支持链式编程.
-2.调用From方法会实例化一个Object对象.dataSource是传进去的Array对象
+>1.支持链式编程.
+>2.调用From方法会实例化一个Object对象.dataSource是传进去的Array对象
 {
    dataSource:Array
    .property
 }
-3. 类似于.net的Linq.
+>3. 类似于.net的Linq.
   3.1 Where,FirstOrdefault... 取出来的都是From传进去的source里面的元素
   3.2 Add,Remove 也是会改变From 传进去的source数组的
   3.3 调用Select后会重新去实例化对象里面的dataSource. 但是不会去改变From方法传进去的source
@@ -23,8 +23,8 @@ var array2 = EasyLinq.From([1,2,4]).Select(function(item){
    return item*2;
 }).ToArray(); // [2,4,8]
 
-var array2 = EasyLinq.From([1,2,4]).Select(function(item){
+var sum2 = EasyLinq.From([1,2,4]).Select(function(item){
        return item*2;
-    }).Sum(); // 14
+ }).Sum(); // 14
 
 
