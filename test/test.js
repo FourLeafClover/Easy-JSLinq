@@ -57,6 +57,12 @@
         assert.equal(4, 4);
     })
 
+    QUnit.test('Distinct',function(assert){
+        var data = [1,2,3,3,3,4,4,5,5];
+        var result = EasyLinq.From(data).Distinct().ToArray();
+        assert.deepEqual(result,[1,2,3,4,5]);
+    });
+
     QUnit.test('FindexIndexOf', function (assert) {
         var data1 = [1, 2, 3, 3, 4];
         var data2 = [];
@@ -134,6 +140,25 @@
             {Name: 'Test', Age: 30, Birthday: new Date('1990/02/02')}
         ];
         assert.deepEqual(data, expected);
+    })
+
+    QUnit.test('GroupBy',function(assert){
+        var data = getObjArray();
+        var result = EasyLinq.From(data).GroupBy(function(item){
+            return item.Age;
+        }).ToArray();
+        assert.deepEqual(result,[
+            {
+                key:23,
+                data:[data[0],data[1]]
+            },{
+                key:24,
+                data:[data[2],data[3]]
+            },{
+                key:25,
+                data:[data[4],data[5]]
+            }
+        ])
     })
 
     QUnit.test('IndexOf', function (assert) {

@@ -72,6 +72,26 @@
         return this.dataSource.length;
     }
 
+    Linq.prototype.Distinct = function () {
+        var result = [];
+        result.push(this.dataSource[0]);
+        for (var index = 1; index < this.dataSource.length; index++) {
+            var isHave = false;
+            for (var i = 0; i < result.length; i++) {
+                if (result[i] === this.dataSource[index]) {
+                    isHave = true;
+                    break;
+                }
+            }
+            if (!isHave) {
+                result.push(this.dataSource[index]);
+            }
+        }
+
+        this.dataSource = result;
+        return this;
+    }
+
     Linq.prototype.FindIndexOf = function (func) {
         var result = -1;
         for (var index = 0; index < this.dataSource.length; index++) {
@@ -116,9 +136,42 @@
         return this;
     }
 
+    Linq.prototype.GroupBy = function (func) {
+
+        if(this.dataSource.length === 0) {
+           return this;
+        }
+
+        var groups = [{
+            key: func(this.dataSource[0]),
+            data: [this.dataSource[0]]
+        }];
+
+        var isHave = false;
+        var key = ''
+        for (var index = 1; index < this.dataSource.length; index++) {
+            isHave = false;
+            key = func(this.dataSource[index]);
+            for (var groupIndex = 0; groupIndex < groups.length; groupIndex++) {
+                if (groups[groupIndex].key === key) {
+                    isHave = true;
+                    groups[groupIndex].data.push(this.dataSource[index]);
+                    break;
+                }
+            }
+            if (!isHave) {
+                groups.push({
+                    key: key,
+                    data: [this.dataSource[index]]
+                })
+            }
+        }
+        this.dataSource = groups;
+        return this;
+    }
+
     Linq.prototype.IndexOf = function (item) {
         return this.dataSource.indexOf(item);
-        return this;
     }
 
     Linq.prototype.Join = function (splitChar) {
