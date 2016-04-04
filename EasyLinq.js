@@ -98,6 +98,7 @@
         for (var index = 0; index < this.dataSource.length; index++) {
             if (func(this.dataSource[index])) {
                 result = index;
+                break;
             }
         }
         return result;

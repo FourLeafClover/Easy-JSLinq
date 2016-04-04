@@ -1,5 +1,6 @@
 (function () {
 
+
     var getObjArray = function () {
         return [
             {Name: 'Florence', Age: 23, Birthday: new Date('1992/02/02')},
@@ -79,9 +80,9 @@
             return item === 1;
         });
 
-        assert.equal(2, 2, 'Linq For FindIndex of 1th passed!');
-        assert.equal(-1, -1, 'Passed!');
-        assert.equal(-1, -1, 'Passed!');
+        assert.equal(result1, 2, 'Linq For FindIndex of 1th passed!');
+        assert.equal(result2, -1, 'Passed!');
+        assert.equal(result3, -1, 'Passed!');
 
     });
 
@@ -101,9 +102,9 @@
             return item === 1;
         });
 
-        assert.equal(4, 4);
-        assert.equal(-1, -1);
-        assert.equal(-1, -1);
+        assert.equal(result1, 3);
+        assert.equal(result2, 5);
+        assert.equal(result3, -1);
     })
 
     QUnit.test('FirstOrDefault', function (assert) {
