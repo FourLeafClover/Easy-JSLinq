@@ -4,6 +4,7 @@
     var ERRORCode_2 = "Please input one param";
     var ERRORCode_3 = "The type of Param is not array";
     var ERRORCode_4 = "The function only support one param";
+    var ERRORCode_5 = "The type of Param is not number";
 
     var Creator = function () {
     };
@@ -235,7 +236,7 @@
                 if (typeof(item) === 'number') {
                     sum += item;
                 } else {
-                    throw ERRORCode_3;
+                    throw ERRORCode_5;
                 }
             });
         }
