@@ -102,7 +102,7 @@
             return item === 1;
         });
 
-        assert.equal(result1, 3);
+        assert.equal(result1, 4);
         assert.equal(result2, 5);
         assert.equal(result3, -1);
     })
