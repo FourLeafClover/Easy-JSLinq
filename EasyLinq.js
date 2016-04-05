@@ -141,8 +141,8 @@
 
     Linq.prototype.GroupBy = function (func) {
 
-        if(this.dataSource.length === 0) {
-           return this;
+        if (this.dataSource.length === 0) {
+            return this;
         }
 
         var groups = [{
@@ -188,25 +188,12 @@
         return this.dataSource[this.dataSource.length - 1];
     }
 
-    Linq.prototype.Pop = function (item) {
-        var index = this.dataSource.indexOf(item);
-        if (index > -1) {
-            this.dataSource.splice(index, 1);
-        }
-        return this;
-    }
+    Linq.prototype.Remove = function (item) {
 
-    Linq.prototype.PopRange = function (items) {
-        if (!Array.isArray(items)) {
-            throw ERRORCode_3;
+        while (this.dataSource.indexOf(item) !== -1) {
+            this.dataSource.splice(this.dataSource.indexOf(item), 1);
         }
-        var outer = this;
-        items.forEach(function (item) {
-            var index = outer.dataSource.indexOf(item);
-            if (index > -1) {
-                outer.dataSource.splice(index, 1);
-            }
-        })
+
         return this;
     }
 

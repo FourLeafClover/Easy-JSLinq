@@ -58,10 +58,10 @@
         assert.equal(4, 4);
     })
 
-    QUnit.test('Distinct',function(assert){
-        var data = [1,2,3,3,3,4,4,5,5];
+    QUnit.test('Distinct', function (assert) {
+        var data = [1, 2, 3, 3, 3, 4, 4, 5, 5];
         var result = EasyLinq.From(data).Distinct().ToArray();
-        assert.deepEqual(result,[1,2,3,4,5]);
+        assert.deepEqual(result, [1, 2, 3, 4, 5]);
     });
 
     QUnit.test('FindexIndexOf', function (assert) {
@@ -143,21 +143,22 @@
         assert.deepEqual(data, expected);
     })
 
-    QUnit.test('GroupBy',function(assert){
+
+    QUnit.test('GroupBy', function (assert) {
         var data = getObjArray();
-        var result = EasyLinq.From(data).GroupBy(function(item){
+        var result = EasyLinq.From(data).GroupBy(function (item) {
             return item.Age;
         }).ToArray();
-        assert.deepEqual(result,[
+        assert.deepEqual(result, [
             {
-                key:23,
-                data:[data[0],data[1]]
-            },{
-                key:24,
-                data:[data[2],data[3]]
-            },{
-                key:25,
-                data:[data[4],data[5]]
+                key: 23,
+                data: [data[0], data[1]]
+            }, {
+                key: 24,
+                data: [data[2], data[3]]
+            }, {
+                key: 25,
+                data: [data[4], data[5]]
             }
         ])
     })
@@ -180,35 +181,11 @@
         assert.equal(result2, '1,2,3');
     });
 
-    QUnit.test('Pop', function (assert) {
-        var data = getObjArray();
-        var popItem = data[1];
-
-        var expected = [
-            {Name: 'Florence', Age: 23, Birthday: new Date('1992/02/02')},
-            {Name: 'Frank', Age: 24, Birthday: new Date('1992/02/02')},
-            {Name: 'Loch', Age: 24, Birthday: new Date('1992/02/02')},
-            {Name: 'Vincent', Age: 25, Birthday: new Date('1992/02/05')},
-            {Name: 'Timothy', Age: 25, Birthday: new Date('1990/02/02')}
-        ];
-        EasyLinq.From(data).Pop(popItem);
-        assert.deepEqual(data, expected);
-    });
-
-    QUnit.test('PopRange', function (assert) {
-        var data = getObjArray();
-        var popItems = [data[0], data[1]];
-
-        var expected = [
-            {Name: 'Frank', Age: 24, Birthday: new Date('1992/02/02')},
-            {Name: 'Loch', Age: 24, Birthday: new Date('1992/02/02')},
-            {Name: 'Vincent', Age: 25, Birthday: new Date('1992/02/05')},
-            {Name: 'Timothy', Age: 25, Birthday: new Date('1990/02/02')}
-        ];
-
-        EasyLinq.From(data).PopRange(popItems);
-        assert.deepEqual(data, expected);
-    });
+    QUnit.test('Remove',function(assert){
+        var data = [1,2,3,3,4];
+        EasyLinq.From(data).Remove(3);
+        assert.deepEqual(data,[1,2,4]);
+    })
 
     QUnit.test('RemoveAll', function (assert) {
         var data = getObjArray();
@@ -241,6 +218,7 @@
         assert.equal(result3, 144);
     })
 
+
     QUnit.test('Select', function (assert) {
         var data = [1, 2, 3, 4];
         var result = EasyLinq.From(data).Select(function (item) {
@@ -251,19 +229,21 @@
     })
 
     QUnit.test('AddRange', function (assert) {
-        var data = [1,2,3,4];
-        EasyLinq.From(data).AddRange([5,6]);
-        assert.deepEqual(data,[1,2,3,4,5,6]);
+        var data = [1, 2, 3, 4];
+        EasyLinq.From(data).AddRange([5, 6]);
+        assert.deepEqual(data, [1, 2, 3, 4, 5, 6]);
     })
 
-    QUnit.test('Where',function(assert){
+    QUnit.test('Where', function (assert) {
         var data = getObjArray();
-        var result = EasyLinq.From(data).Where(function(item){
-           return item.Age === 24;
+        var result = EasyLinq.From(data).Where(function (item) {
+            return item.Age === 24;
         }).ToArray();
 
-        var expected = [data[2],data[3]];
-        assert.deepEqual(result,expected);
+        var expected = [data[2], data[3]];
+        assert.deepEqual(result, expected);
     })
 
 })(window.QUnit);
+
+
