@@ -33,7 +33,7 @@ var sum2 = EasyLinq.From([1,2,4]).Select(function(item){
  }).Sum(); // 14
 </pre>
 
-4. 详情请参考gitbook还在完善中.
+4. 详情请参考gitbook还在完善中. 要查看的小伙伴需要翻墙哦.
    <a>https://fourleafclover.gitbooks.io/easy-linq/content/index.html</a>
 
 
